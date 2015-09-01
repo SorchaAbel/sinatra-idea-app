@@ -1,0 +1,20 @@
+<br />
+<br />
+<br />
+<p>
+  <strong>Name:</strong>
+  <%= @idea.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @idea.description %>
+</p>
+
+<p>
+  <strong>Picture:</strong>
+  <%= @idea.picture if @idea.picture.present? %>
+</p>
+<p> <%= delete_idea_button(@idea.id) %></p>
+
+

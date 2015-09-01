@@ -1,0 +1,32 @@
+<br />
+<br />
+<h1>Listing Ideas</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Picture</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @ideas.each do |idea| %>
+      <tr>
+        <td><%= idea.name %></td>
+        <td><%= idea.description %></td>
+        <td><%= idea.picture.present? %></td>
+        <td><a href="/ideas/<%= idea.id %>/edit">Edit</a></td>
+        <td><a href="/ideas/<%= idea.id %>">Show</a></td>
+        <td><a href="/download/<%= idea.picture %>">Download</a></td>
+        <!--<td><a href=""<%= delete_idea_button(idea.id) %></td>-->
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
