@@ -57,8 +57,23 @@ end
 # render the edit form again with the failed @idea object still in memory
 # so they can retry.
 put "/ideas/:id" do
+    p params
+    if params[:idea].try(:[], :picture)
+        file      = params[:idea][:picture][:tempfile]
+        @filename = params[:idea][:picture][:filename] 
+    end
+
     @idea = Idea.find(params[:id])
+
     if @idea.update_attributes(params[:idea])
+        if @filename
+            @idea.picture = @filename
+            p "the sorcha filename is #{@filename}"
+            @idea.save
+            File.open("./files/#{@filename}", 'wb') do |f|
+                f.write(file.read)
+            end
+        end
         redirect "/ideas/#{@idea.id}"
     else
         erb :edit
@@ -74,7 +89,6 @@ get "/about" do
     erb :about
 end
 helpers do
-
     def delete_idea_button(idea_id)
         erb :_delete_idea_button, locals: { idea_id: idea_id}
     end
