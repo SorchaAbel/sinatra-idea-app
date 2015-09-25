@@ -1,0 +1,28 @@
+<form action="/comments" method="post">
+  <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2>An input error prohibited this comment from being saved:</h2>
+
+        <ul>
+          <% @comment.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+<div class="field">
+  <label for="comment_user_name">Name:</label><br />
+  <input id="comment_user_name" name="comment[user_name]" type="text" value="<%= @comment.user_name %>" />
+  <br />
+
+  <label for="comment_body">Body:</label><br />
+  <textarea id="comment_body" name="comment[body]" rows="5"><%= @comment.body%></textarea>
+  <br />
+
+  <input id="comment_idea_id" name="comment[idea_id]" type="hidden" value="<%= @comment.idea_id %>" />
+
+</div>
+  <input type="submit" value="Create Comment" />
+</form>
+
+

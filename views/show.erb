@@ -15,6 +15,15 @@
   <strong>Picture:</strong>
   <%= @idea.picture if @idea.picture.present? %>
 </p>
+<h3>Comments</h3>
+<% @comments.each do |comment| %>
+    <div>
+      <strong><%= comment.user_name %></strong>
+      <br />
+      <p><%= comment.body %></p>
+    </div>
+<% end %>
+<%= erb :_form %>
 <p> <%= delete_idea_button(@idea.id) %></p>
 
 

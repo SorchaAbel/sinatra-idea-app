@@ -7,7 +7,21 @@ ActiveRecord::Base.establish_connection(
     :database => 'idea.db'
 )
 
+class Idea < ActiveRecord::Base
+    has_many :comments
+end
+
+class Comment < ActiveRecord::Base
+  belongs_to :idea
+  validates_presence_of :body, :user_name
+end
+
 get '/ideas' do
+    @ideas = Idea.all
+    erb :index
+end
+
+get '/' do
     @ideas = Idea.all
     erb :index
 end
@@ -36,6 +50,22 @@ post "/ideas" do
     end
 end
 
+post "/comments" do
+    @comment = Comment.new(params[:comment])
+    p "The comment params are #{params[:comment]}"
+    if @comment.save
+        redirect "/ideas"
+    else
+        p "the idea id is #{params[:comment][:idea_id]}"
+        @idea = Idea.find(params[:comment][:idea_id])
+        @comments = Comment.where(idea_id: params[:id])
+        p "The idea is #{@idea.inspect}"
+        #@idea.name = @idea.name
+        #@idea.description = @idea.description
+        erb :show
+    end
+end
+
 get '/download/:filename' do |filename|
     p "inside the loop of downloads"
     send_file "./files/#{filename}", :filename => filename, :type => 'Application/octet-stream'
@@ -44,6 +74,8 @@ end
 # Get the individual page of the post with this ID.
 get "/ideas/:id" do
     @idea = Idea.find(params[:id])
+    @comments = Comment.where(idea_id: params[:id])
+    @comment = @idea.comments.build
     erb :show
 end
 
@@ -60,7 +92,7 @@ put "/ideas/:id" do
     p params
     if params[:idea].try(:[], :picture)
         file      = params[:idea][:picture][:tempfile]
-        @filename = params[:idea][:picture][:filename] 
+        @filename = params[:idea][:picture][:filename]
     end
 
     @idea = Idea.find(params[:id])
@@ -93,5 +125,4 @@ helpers do
         erb :_delete_idea_button, locals: { idea_id: idea_id}
     end
 end
-class Idea < ActiveRecord::Base
-end
+
