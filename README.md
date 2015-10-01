@@ -16,6 +16,6 @@ This is the tutorial app for ruby_girls
 
 * bundle install
 
-* rake db:create db:migrate
+* rake db:create db:migrate db:seed
 
 * rackup
