@@ -1,8 +1,8 @@
-post "/comments" do
+post '/comments' do
   @comment = Comment.new(params[:comment])
   p "The comment params are #{params[:comment]}"
   if @comment.save
-    redirect "/ideas"
+    redirect '/ideas'
   else
     p "the idea id is #{params[:comment][:idea_id]}"
     @idea = Idea.find(params[:comment][:idea_id])
