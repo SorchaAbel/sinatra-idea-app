@@ -1,3 +1,13 @@
-# Created by .ignore support plugin (hsz.mobi)
-files/*.jpg
-files/*.png
+# system files
+.DS_Store
+
+# IDE files
+.idea/*
+
+# temporary application files
+/log/*
+/tmp
+db/*.sqlite3
+
+# uploaded files
+/files/?*.*

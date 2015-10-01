@@ -20,8 +20,9 @@
         <td><%= idea.picture.present? %></td>
         <td><a href="/ideas/<%= idea.id %>/edit">Edit</a></td>
         <td><a href="/ideas/<%= idea.id %>">Show</a></td>
-        <td><a href="/download/<%= idea.picture %>">Download</a></td>
-        <!--<td><a href=""<%= delete_idea_button(idea.id) %></td>-->
+        <td><% if idea.picture %><a href="/files/<%= idea.picture %>">View Picture</a><% end %></td>
+        <td><% if idea.picture %><a href="/files/<%= idea.picture %>/download">Download Picture</a><% end %></td>
+        <!--<td><a href=""<%#= delete_idea_button(idea.id) %>-->
       </tr>
   <% end %>
   </tbody>
