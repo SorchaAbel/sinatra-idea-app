@@ -4,12 +4,7 @@ post '/comments' do
   if @comment.save
     redirect '/ideas'
   else
-    p "the idea id is #{params[:comment][:idea_id]}"
-    @idea = Idea.find(params[:comment][:idea_id])
-    @comments = Comment.where(idea_id: params[:id])
-    p "The idea is #{@idea.inspect}"
-    #@idea.name = @idea.name
-    #@idea.description = @idea.description
+    @flash = {errors: [{comment: 'could not save comment'}]}
     erb :show
   end
 end

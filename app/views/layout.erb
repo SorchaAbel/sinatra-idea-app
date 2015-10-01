@@ -38,6 +38,17 @@
   </div>
 </nav>
 <div class="container">
+
+  <% @flash.each do |type, content| %>
+    <% if content.respond_to?('each') %>
+      <% content.each do |item| %>
+        <%= render 'alert',
+                   type:    type,
+                   content: item %>
+      <% end %>
+    <% end %>
+  <% end if @flash %>
+
   <%= yield %>
 </div>
 <footer>
