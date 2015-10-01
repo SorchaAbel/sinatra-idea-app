@@ -1,3 +1,3 @@
 get '/about' do
-  erb :about
+  erb :'application/about'
 end

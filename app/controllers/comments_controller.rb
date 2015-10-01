@@ -4,7 +4,8 @@ post '/comments' do
   if @comment.save
     redirect '/ideas'
   else
+    @idea = Idea.find(params[:comment][:idea_id])
     @flash = {errors: [{comment: 'could not save comment'}]}
-    erb :show
+    erb :'ideas/show'
   end
 end

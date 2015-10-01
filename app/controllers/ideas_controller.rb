@@ -1,7 +1,7 @@
 %w(/ /ideas).each do |path|
   get path do
     @ideas = Idea.all
-    erb :index
+    erb :'ideas/index'
   end
 end
 
@@ -9,7 +9,7 @@ end
   get path do
     @title = 'New Idea'
     @idea  = Idea.new
-    erb :new
+    erb :'ideas/new'
   end
 end
 
@@ -27,7 +27,7 @@ post '/ideas' do
   if @idea.save
     redirect "/ideas"
   else
-    erb :new
+    erb :'ideas/new'
   end
 end
 
@@ -36,12 +36,12 @@ get '/ideas/:id' do
   @idea     = Idea.find(params[:id])
   @comments = Comment.where(idea_id: params[:id])
   @comment  = @idea.comments.build
-  erb :show
+  erb :'ideas/show'
 end
 
 get '/ideas/:id/edit' do
   @idea = Idea.find(params[:id])
-  erb :edit
+  erb :'ideas/edit'
 end
 
 # The Edit Post form sends a PUT request (modifying data) here.
@@ -68,7 +68,7 @@ put '/ideas/:id' do
     end
     redirect "/ideas/#{@idea.id}"
   else
-    erb :edit
+    erb :'ideas/edit'
   end
 end
 
@@ -80,7 +80,7 @@ end
 
 helpers do
   def delete_idea_button(idea_id)
-    erb :_delete_idea_button, locals: { idea_id: idea_id }
+    erb :'ideas/_delete_idea_button', locals: { idea_id: idea_id }
   end
 end
 
