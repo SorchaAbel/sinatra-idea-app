@@ -4,6 +4,7 @@ require 'bundler'
 Bundler.require
 
 $: << File.expand_path('../', __FILE__)
+
 Dir['./app/**/*.rb'].sort.each { |file| require file }
 
 # sinatra configuration
