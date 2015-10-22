@@ -2,14 +2,13 @@ require 'sinatra_helper'
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-RSpec.describe Idea do
+RSpec.describe 'IdeasController' do
 
   describe 'My Sinatra Application' do
-
-    it 'should not save without name' do
-      expect(subject).to_not be_valid
+    it 'should allow accessing the home page' do
+      get '/'
+      expect(last_response).to be_ok
     end
-    
   end
 
 # ----------------------------------------------------------------------------------------------------------------------

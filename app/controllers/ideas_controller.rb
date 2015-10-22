@@ -83,5 +83,3 @@ helpers do
     erb :'ideas/_delete_idea_button', locals: { idea_id: idea_id }
   end
 end
-
-
