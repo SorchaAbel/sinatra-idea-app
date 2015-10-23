@@ -2,16 +2,20 @@ require 'sinatra_helper'
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-RSpec.describe Idea do
+RSpec.describe Comment do
 
   describe '#initialize' do
 
-    it 'without name' do
-      expect(described_class.new(name: nil, description: 'description')).to_not be_valid
+    it 'without user_name' do
+      expect(described_class.new(body: 'body', user_name: nil)).to_not be_valid
+    end
+
+    it 'without body' do
+      expect(described_class.new(body: nil, user_name: 'user_name')).to_not be_valid
     end
 
     it 'with valid' do
-      expect(described_class.new(name: 'name', description: 'description')).to be_valid
+      expect(described_class.new(body: 'body', user_name: 'user_name')).to be_valid
     end
 
   end
