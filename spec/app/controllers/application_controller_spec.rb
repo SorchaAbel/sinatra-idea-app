@@ -2,18 +2,13 @@ require 'sinatra_helper'
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-RSpec.describe Idea do
+RSpec.describe 'ApplicationController' do
 
-  describe '#initialize' do
-
-    it 'without name' do
-      expect(described_class.new(name: nil, description: 'description')).to_not be_valid
+  describe 'get /about' do
+    it 'allows access' do
+      get '/about'
+      expect(last_response).to be_ok
     end
-
-    it 'with valid' do
-      expect(described_class.new(name: 'name', description: 'description')).to be_valid
-    end
-
   end
 
 # ----------------------------------------------------------------------------------------------------------------------

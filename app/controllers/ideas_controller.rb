@@ -14,18 +14,23 @@ end
 end
 
 post '/ideas' do
-  @idea = Idea.new(params[:idea])
-  p "testing #{@idea.picture}"
-  @filename     = params[:idea][:picture][:filename]
-  @idea.picture = @filename
-  file          = params[:idea][:picture][:tempfile]
-  p "The filename is #{@filename}"
+  if params[:idea] && params[:idea][:picture] && params[:idea][:picture][:filename] && params[:idea][:picture][:tempfile]
+    @idea         = Idea.new(params[:idea])
 
-  File.open("./files/#{@filename}", 'wb') do |f|
-    f.write(file.read)
-  end
-  if @idea.save
-    redirect "/ideas"
+    @filename     = params[:idea][:picture][:filename]
+    directory     = ('a'..'z').to_a.shuffle[0, 8].join
+    @idea.picture = "#{directory}/#{@filename}"
+    file          = params[:idea][:picture][:tempfile]
+    Dir.mkdir("./files/#{directory}")
+
+    FileUtils.copy_file(file.path,
+                        "files/#{@idea.picture}")
+
+    if @idea.save
+      redirect '/ideas'
+    else
+      erb :'ideas/new'
+    end
   else
     erb :'ideas/new'
   end
@@ -49,7 +54,6 @@ end
 # render the edit form again with the failed @idea object still in memory
 # so they can retry.
 put '/ideas/:id' do
-  p params
   if params[:idea].try(:[], :picture)
     file      = params[:idea][:picture][:tempfile]
     @filename = params[:idea][:picture][:filename]
@@ -60,7 +64,6 @@ put '/ideas/:id' do
   if @idea.update_attributes(params[:idea])
     if @filename
       @idea.picture = @filename
-      p "the sorcha filename is #{@filename}"
       @idea.save
       File.open("./files/#{@filename}", 'wb') do |f|
         f.write(file.read)
@@ -83,5 +86,3 @@ helpers do
     erb :'ideas/_delete_idea_button', locals: { idea_id: idea_id }
   end
 end
-
-
